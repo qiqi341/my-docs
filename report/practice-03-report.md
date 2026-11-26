@@ -1,9 +1,8 @@
-# 实践课3：Pi Agent源码安装与编译 [姓名拼音] 实验报告
+# 实践课3：Pi Agent源码安装与编译 guoxiaqi
 
-**仓库地址：** ``  
-**当前分支：** `main`  
-**提交编号：** `957c0c49b6e957deb548a19691f7bcff57a12122`
-
+* 姓名：郭夏琪
+* GitHub登录名：qiqi341
+* 小组仓库地址：https://github.com/orgs/superheror/repositories
 ---
 
 ## 任务一：实验准备：检查和安装开发工具
@@ -13,7 +12,7 @@
 *   **Node.js:** `v24.18.0` （满足根项目 `>=22.19.0` 的要求，且符合建议使用 Node.js 24 LTS 的说明）
 *   **npm:** `11.16.0` （随 Node.js 附带安装）
 *   **Git:** `version 2.55.0.windows.2`
-
+>![显示环境依赖](images/3-S1环境依赖.png)
 
 ---
 
@@ -30,9 +29,7 @@
 *   `git rev-parse HEAD`：`957c0c49b6e957deb548a19691f7bcff57a12122`
 *   `git status --short`：工作区干净，无未提交修改。
 
-> **截图 S2**：显示当前目录、远端地址、分支和提交编号。  
-> *(请替换为你的实际图片路径)*  
-> ![检查仓库状态](images/此处填你的截图文件名2.png)
+> ![当前信息显示](images/3-S2当前信息显示.png)
 
 ---
 
@@ -43,9 +40,8 @@
 *   **Node.js 版本要求**：位于 `engines` 字段中，声明为 `"node": ">=22.19.0"`。
 *   **构建脚本**：位于 `scripts` 字段中的 `"build"` 命令。其内容为 `"cd packages/telemetry && npm run build && cd ../schema && npm run build && ..."`。这说明 `npm run build` 实际上是从根目录依次进入各个子包（packages），并执行子包各自的构建命令，且前一步成功（`&&`）才会执行下一步。
 
-> **截图 S3**：显示 `engines.node` 和 `scripts.build` 的定义。  
-> *(请替换为你的实际图片路径)*  
-> ![查看配置文件](images/此处填你的截图文件名3.png)
+> ![build](images/3-S3build.png)
+> ![engines](images/3-S3engines.png)
 
 ---
 
@@ -62,10 +58,8 @@
 *   添加了 332 个包，修改了 1 个包，审计了 356 个包（耗时 23秒）。
 *   有 `prebuild-install` 和 `node-domexception` 的弃用 (deprecated) 警告，但不影响安装成功。
 *   审计结果：`found 0 vulnerabilities`（未发现已知漏洞）。
-
-> **截图 S4**：显示安装结束的输出结果。  
-> *(请替换为你的实际图片路径)*  
-> ![安装依赖](images/此处填你的截图文件名4.png)
+ 
+> ![安装依赖](images/3-S4显示安装输出结果.png)
 
 ---
 
@@ -80,9 +74,7 @@
 *   `Test-Path .\packages\coding-agent\dist\bundle\cli.js`：输出 `True`，证明入口文件存在。
 *   `node .\packages\coding-agent\dist\bundle\cli.js --version`：输出 `1.5.2`，证明编译产物可正常运行。
 
-> **截图 S5**：显示构建结束、退出码 0、入口文件存在及版本号验证。  
-> *(请替换为你的实际图片路径)*  
-> ![验证构建产物](images/此处填你的截图文件名5.png)
+> ![验证构建产物](images/3-S5完整构建.png)
 
 ---
 
@@ -98,9 +90,9 @@
 
 **模型回复：** `源码是人写的、可读可改的原始文本；编译产物是工具从源码生成的、供运行环境直接执行的输出（如 dist/ 下的 JS/二进制），通常不手改。`
 
-> **截图 S6**：显示 `.\pi-test.bat` 的启动、Pi 界面、自己的提示词和实际模型回复。  
-> *(请替换为你的实际图片路径)*  
-> ![源码运行会话](images/此处填你的截图文件名6.png)
+> ![源码运行会话](images/3-S6启动命令.png)
+> ![源码运行会话](images/3-S6pi界面.png)
+> ![源码运行会话](images/3-S6提示词界面.png)
 
 ### 报告说明
 通过执行 `.\pi-test.bat`，该脚本内部由 Node.js 加载本地源码解析器并运行 `packages/coding-agent/src/cli.ts` 源码，而不是调用系统环境变量中的全局 `pi` 命令。
@@ -118,8 +110,3 @@
 **困难 2：确保运行的是本地源码而非全局旧版本**
 *   **现象**：之前使用 `pi` 命令，可能调起的是第一次实验安装的全局版本。
 *   **解决**：查阅了根目录的 `pi-test.bat` 文件，发现它是运行本地源码的专用入口，通过 `node` 直接解析 `src` 目录下的 TypeScript 文件。因此在验证时，专门使用 `.\pi-test.bat` 来启动。由于本地源码版与已安装的 Pi 共用配置目录，登录状态得以保留，成功进行了对话。
-
----
-
-**提交方式说明：**
-我已将上述实验报告及截图上传至个人 Git 仓库。并在课程作业仓库按第一次实践课的方式提交了 Issue，Issue 名称为：`实践课3：Pi Agent源码安装与编译 [姓名拼音]`。
